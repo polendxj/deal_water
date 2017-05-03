@@ -19,6 +19,8 @@ import SetBillInfoContainer from './containers/financialStatistics/SetBillInfoCo
 import CreateBillInfoContainer from './containers/financialStatistics/CreateBillInfoContainer'
 import source_main from './containers/source_main'
 import PersonnalContainer from './containers/financialStatistics/PersonnalContainer'
+import UserManageListContainer from './containers/userManage/UserManageListContainer'
+import UserManageRegisterContainer from './containers/userManage/UserManageRegisterContainer'
 import configureStore from './store/configureStore'
 
 let store = configureStore()
@@ -40,6 +42,8 @@ render(
                 <Route path="/createBillInfo" component={CreateBillInfoContainer}/>
                 <Route path="/personal" component={PersonnalContainer}/>
                 <Route path="/sourceMain" component={source_main}/>
+                <Route path="/userManage" component={UserManageListContainer}/>
+                <Route path="/userManage/Register" component={UserManageRegisterContainer}/>
             </Route>
         </Router>
     </Provider>,

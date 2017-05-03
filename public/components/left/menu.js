@@ -249,7 +249,7 @@ class PerformanceMonitoringMenu extends Component {
                 <li className="left" onClick={this._leftMenuClick.bind(this, '/')}>
                     <hr style={{width:"90%"}} />
                 </li>
-                <li className="left">
+                <li className="left" onClick={this._leftMenuClick.bind(this, '/userManage')}>
                     <a href="javascript:void(0)" style={{fontSize:"14px"}}><i className=" icon-users"></i>
                         <span>{"用户中心"}</span></a>
                 </li>
