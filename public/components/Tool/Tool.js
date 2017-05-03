@@ -836,3 +836,38 @@ function intValue(num) {
     }
     return num;
 }
+
+export function riverLevel(level){
+    var riverLevel = "";
+    switch (level){
+        case 1:
+            riverLevel = "省内";
+            break;
+        case 2:
+            riverLevel = "县级";
+            break;
+        case 3:
+            riverLevel = "镇级";
+            break;
+        case 4:
+            riverLevel = "村级";
+            break;
+        default:
+            break;
+    }
+    return riverLevel;
+}
+export function userType(type) {
+    var userType = "";
+    switch (type) {
+        case 1:
+            userType = "河长";
+            break;
+        case 2:
+            userType = "网格员";
+            break;
+        default:
+            break;
+    }
+    return userType;
+}

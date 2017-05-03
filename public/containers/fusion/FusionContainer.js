@@ -4,7 +4,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux';
 import {commonRefresh} from '../../actions/Common';
-import {NoData} from '../../components/Tool/Tool'
+import {NoData,ErrorModal,riverLevel} from '../../components/Tool/Tool'
 import Highcharts from 'highcharts'
 
 class FusionContainer extends Component {
@@ -14,7 +14,9 @@ class FusionContainer extends Component {
         this._startRefresh = this._startRefresh.bind(this);
         this._gotoDetail = this._gotoDetail.bind(this);
         this._gotoCreate = this._gotoCreate.bind(this);
+        this._showData = this._showData.bind(this);
         this.showAddDomain = false;
+        this.data = {name:"汉江",src:"./assets/demo_map.jpg",length:68,level:"省内",start:"陕西汉中市",end:"湖北武汉市",response:"陕西省、湖北省"};
     }
 
     _startRefresh() {
@@ -35,16 +37,20 @@ class FusionContainer extends Component {
         this.page_position = "detail";
         this._startRefresh();
     }
-
+    _showData(data){
+        this.data = data;
+        this.showAddDomain = false;
+        this._startRefresh();
+    }
     render() {
         var tableHeight = ($(window).height() - 93);
         var result = "";
         if (this.showAddDomain) {
-            result=<FusionContainerRight />
+            result=<FusionContainerRight _startRefresh={this._startRefresh} data={this.data}/>
         }else{
             result= <Source_panel_right _gotoCreate={this._gotoCreate} _gotoDetail={this._gotoDetail}
                                         _addDomain={this._addDomain} showAddDomain={this.showAddDomain}
-                                        _startRefresh={this._startRefresh}/>
+                                        _startRefresh={this._startRefresh} data={this.data}/>
         }
         return (
             <div style={{height: tableHeight + 'px'}}>
@@ -56,7 +62,7 @@ class FusionContainer extends Component {
                         borderRight: "thin lightgray solid"
                     }}>
                         <FusionContainerLeft _addDomain={this._addDomain} _gotoCreate={this._gotoCreate}
-                                             _gotoDetail={this._gotoDetail}/>
+                                             _gotoDetail={this._gotoDetail} _showData={this._showData}/>
                     </div>
                     <div style={{overflow: "hidden", height: "100%",}}>
                         {result}
@@ -72,13 +78,45 @@ class FusionContainer extends Component {
 class FusionContainerLeft extends Component {
     constructor(props) {
         super(props);
+        this.waterKey = "";
+        this.treeData=[
+            {"key": "1","title": "汉江", "expanded": true, "folder": true, "children": [
+                {"key": "1_2", "title": "汉阴县", "folder": true,"expanded": true, "children": [
+                    {"key": "1_2_1", "title": "汉王镇","expanded": true, "children": [
+                        {"key": "1_2_1_1", "title": "钱家坪"},
+                        {"key": "1_2_1_2", "title": "樊家坡"},
+                        {"key": "1_2_1_3", "title": "武家寨"},
+                        {"key": "1_2_1_4", "title": "马家营"},
+                        {"key": "1_2_1_5", "title": "团包梁"}
+                    ]}
+                ]}
+            ]}
+        ];
+        this.glyph_opts = {
+            map: {
+                doc: "icon icon-office",
+                docOpen: "icon icon-office",
+                error: "icon icon-warning-sign",
+                folder: "icon icon-city",
+                folderOpen: "icon icon-city",
+                loading: "icon icon-refresh icon-spin"
+            }
+        };
+        this._showData = this._showData.bind(this);
     }
 
     _addDomain() {
-        this.props._addDomain();
+        if(this.waterKey){
+            this.props._addDomain();
+        }else{
+            ErrorModal("提示","请选择河道");
+        }
     }
-
+    _showData(data){
+        this.props._showData(data);
+    }
     componentDidMount() {
+        var that = this;
         $('.navigation-main1').find('li').has('ul').children('a').on('click', function (e) {
             e.preventDefault();
 
@@ -90,6 +128,40 @@ class FusionContainerLeft extends Component {
                 $(this).parent('li').not('.disabled').not($('.sidebar-xs').not('.sidebar-xs-indicator').find('.navigation-main').children('li')).siblings(':has(.has-ul)').removeClass('active').children('ul').slideUp(250);
             }
         });
+        $("#tree").fancytree({
+            extensions: ["glyph"],
+            glyph: that.glyph_opts,
+            source: that.treeData,
+            activate: function(event, data) {
+                console.log(data.node.key.split("_"));
+                that.waterKey = data.node.key;
+                var riverwayData = {};
+                riverwayData.key = data.node.key;
+                if(data.node.key=="1"){
+                    riverwayData.name = data.node.title;
+                    riverwayData.length = 68;
+                    riverwayData.level = "省内";
+                    riverwayData.start = "陕西汉中市";
+                    riverwayData.end = "湖北武汉市";
+                    riverwayData.response = "陕西省、湖北省";
+                    riverwayData.src = "./assets/demo_map.jpg";
+                }else{
+                    if(data.node.key=="1_2"){
+                        riverwayData.src = "./assets/unit.png";
+                    }else {
+                        riverwayData.src = "./assets/hanwangzhen.png";
+                    }
+                    riverwayData.name = "汉江"+data.node.title+"河段";
+                    riverwayData.length = 22;
+                    riverwayData.level = "县级";
+                    riverwayData.start = "秦家院子";
+                    riverwayData.end = "新石桥";
+                    riverwayData.response = "汉阴县";
+                }
+                that._showData(riverwayData);
+            }
+        });
+        $("#tree span").removeClass("fancytree-icon");
     }
 
     render() {
@@ -112,7 +184,8 @@ class FusionContainerLeft extends Component {
                         </div>
                     </div>
                 </div>
-                <fieldset className="content-group" style={{padding: "30px"}}>
+                <div id="tree" className="panel-body fancytree-colorize-hover fancytree-fade-expander" style={{border:0}}></div>
+                {/*<fieldset className="content-group" style={{padding: "30px"}}>
                     <div className="navigation navigation-main1 navigation-accordion" style={{marginTop: "-40px"}}>
                         <li className="active">
                             <ul className="hidden-ul" style={{display: "block"}}>
@@ -151,7 +224,7 @@ class FusionContainerLeft extends Component {
                             </ul>
                         </li>
                     </div>
-                </fieldset>
+                </fieldset>*/}
             </div>
         )
     }
@@ -312,11 +385,12 @@ class Source_panel_right extends Component {
     }
 
     render() {
+        const {data} = this.props;
         var tableHeight = ($(window).height() - 203);
         var text = JSON.stringify({"error": "Document not found"});
         return (
             <div style={{padding: "10px"}}>
-                <h4 className="panel-title"><i className="icon-feed"> </i> &nbsp;&nbsp;湖景大坝1段
+                <h4 className="panel-title"><i className="icon-feed"> </i> &nbsp;&nbsp;{data.name}
                 </h4>
                 <div className="tabbable">
                     <ul className="nav nav-tabs nav-tabs-bottom">
@@ -329,7 +403,7 @@ class Source_panel_right extends Component {
                         <div className="tab-pane flipInX active" id="bottom-tab1">
                             <div className="row" style={{marginLeft: "0", marginRight: "10px"}}>
                                 <div className="col-md-12">
-                                    <img src="./assets/demo_map.jpg" style={{width:"100%",height:"550px"}} />
+                                    <img src={data.src} style={{width:"100%",height:"550px"}} />
                                 </div>
                                 <div className="col-md-12">
                                     <fieldset className="content-group" style={{padding: "10px"}}>
@@ -342,25 +416,25 @@ class Source_panel_right extends Component {
                                                 <tr>
                                                     <td style={{width: "200px", borderTop: "0 red solid"}}>河道名称</td>
                                                     <td style={{borderTop: "0 red solid"}}>
-                                                        江河源河道
+                                                        {data.name}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style={{width: "200px", borderTop: "0 red solid"}}>长度（km）</td>
-                                                    <td style={{borderTop: "0 red solid"}}>68</td>
+                                                    <td style={{borderTop: "0 red solid"}}>{data.length}</td>
                                                 </tr>
                                                 <tr>
                                                     <td style={{width: "200px", borderTop: "0 red solid"}}>河道等级
                                                     </td>
-                                                    <td style={{borderTop: "0 red solid"}}>省内</td>
+                                                    <td style={{borderTop: "0 red solid"}}>{data.level}</td>
                                                 </tr>
                                                 <tr>
                                                     <td style={{width: "200px", borderTop: "0 red solid"}}>起点</td>
-                                                    <td style={{borderTop: "0 red solid"}}>秦家院子</td>
+                                                    <td style={{borderTop: "0 red solid"}}>{data.start}</td>
                                                 </tr>
                                                 <tr>
                                                     <td style={{width: "200px", borderTop: "0 red solid"}}>终点</td>
-                                                    <td style={{borderTop: "0 red solid"}}>新石桥</td>
+                                                    <td style={{borderTop: "0 red solid"}}>{data.end}</td>
                                                 </tr>
                                                 <tr>
                                                     <td style={{width: "200px", borderTop: "0 red solid"}}>告示牌</td>
@@ -383,7 +457,7 @@ class Source_panel_right extends Component {
                                             责任体
                                         </legend>
 
-                                        <p>江东区、江北区、高新区、镇海区、北仑区</p>
+                                        <p>{data.response}</p>
                                     </fieldset>
                                     <fieldset className="content-group" style={{padding: "10px"}}>
                                         <legend style={{fontSize: "16px", color: "#5E6166"}}>
@@ -393,16 +467,20 @@ class Source_panel_right extends Component {
                                             <table className="table" style={{fontSize: "14px"}}>
                                                 <tbody>
                                                 <tr>
-                                                    <td style={{borderTop: "0 red solid"}}>执行河长</td>
-                                                    <td style={{borderTop: "0 red solid"}}>楚梦形</td>
+                                                    <td style={{borderTop: "0 red solid"}}>县河长</td>
+                                                    <td style={{borderTop: "0 red solid"}}>寇建波</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{borderTop: "0 red solid"}}>河道警长</td>
-                                                    <td style={{borderTop: "0 red solid"}}>王伟彪</td>
+                                                    <td style={{borderTop: "0 red solid"}}>镇河长</td>
+                                                    <td style={{borderTop: "0 red solid"}}>方舟</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{borderTop: "0 red solid"}}>二级河长</td>
-                                                    <td style={{borderTop: "0 red solid"}}>薛维海</td>
+                                                    <td style={{borderTop: "0 red solid"}}>村河长</td>
+                                                    <td style={{borderTop: "0 red solid"}}>赵重阳</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style={{borderTop: "0 red solid"}}>网格员</td>
+                                                    <td style={{borderTop: "0 red solid"}}>李伟</td>
                                                 </tr>
                                                 <tr>
                                                     <td style={{borderTop: "0 red solid"}}>联系部门</td>
@@ -908,38 +986,23 @@ class FusionContainerRight extends Component {
         this.geoCover = "china";
         this.protocol = "http";
         this.platform = "web";
-        this.sourceType = "langchaoBucket";
-        this.httpsPlaceholder = "参考样例:" +
-            "-----BEGIN CERTIFICATE-----" +
-            "MIIFDTCCA/WgAwIBAgIQJ8rA5miM0Lh963iOqTqPOjANBgkqhkiG9w0BAQsFADB4" +
-            "MQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjEpMCcGA1UECxMg" +
-            "U3RhcnRDb20gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxJjAkBgNVBAMTHVN0YXJ0" +
-            "Q29tIENsYXNzIDEgRFYgU2VydmVyIENBMB4XDTE2MDMxNjA1MTgyOFoXDTE3MDMx" +
-            "NjA1MTgyOFowFDESMBAGA1UEAwwJZGFybGluLm1lMIIBIjANBgkqhkiG9w0BAQEF" +
-            "AAOCAQ8AMIIBCgKCAQEA62IMKtcGkyPDLUPsYcu464gDDE5kjOGdlSrXIv+Hr58/" +
-            "I5v9vks7eGIFc5eR2X/C9J0PltDHSWeJkmuafThFeP7hd2chWbKA44zEKBov0xIb" +
-            "gBKgJSPd3MFihsIB8i7z8RyHP1YYQIiVe4g7SQwxHgvNKcYd5g+DRP7TUAVS43mN" +
-            "CBq04filry2MITqzLNROvrbFulsc1OlOmcHG4m1rkxgWver6cX4V7MG5MMDZKbGE" +
-            "GljC4vBUvNf/GIeoGuismCQIa0xwh7eK7ZSN63sTLhAyyOuAgn1f2xwQ4m4CkKda" +
-            "jcM1Vc/9jtb/0ae4G84kL3K8vdzWxnTe0kg3BEaCswIDAQABo4IB9TCCAfEwDgYD" +
-            "VR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAJBgNV" +
-            "HRMEAjAAMB0GA1UdDgQWBBROJ/n8SbSTKGaPpdjF+Ry0STCb8jAfBgNVHSMEGDAW" +
-            "gBTXkU4BxLC/+Mhnk0Sc5zP6rZMMrzBvBggrBgEFBQcBAQRjMGEwJAYIKwYBBQUH" +
-            "MAGGGGh0dHA6Ly9vY3NwLnN0YXJ0c3NsLmNvbTA5BggrBgEFBQcwAoYtaHR0cDov" +
-            "L2FpYS5zdGFydHNzbC5jb20vY2VydHMvc2NhLnNlcnZlcjEuY3J0MDgGA1UdHwQx" +
-            "MC8wLaAroCmGJ2h0dHA6Ly9jcmwuc3RhcnRzc2wuY29tL3NjYS1zZXJ2ZXIxLmNy" +
-            "bDBTBgNVHREETDBKgglkYXJsaW4ubWWCEHN0YXRpYy5kYXJsaW4ubWWCDWFwaS5k" +
-            "YXJsaW4ubWWCDXd3dy5kYXJsaW4ubWWCDW5ldy5kYXJsaW4ubWUwIwYDVR0SBBww" +
-            "GoYYaHR0cDovL3d3dy5zdGFydHNzbC5jb20vMFAGA1UdIARJMEcwCAYGZ4EMAQIB" +
-            "MDsGCysGAQQBgbU3AQIEMCwwKgYIKwYBBQUHAgEWHmh0dHA6Ly93d3cuc3RhcnRz" +
-            "c2wuY29tL3BvbjljeTaNBskqhdiG9w0BAQsFAAOCAQEAdyx3PiO0Y9csDsRboOwE" +
-            "cM2M83zzY1n39m4efS+lHDR0Lw/MiHcszfFjg90TDTre8qjAbFe38yNNWMWt6+EO" +
-            "lGq7+mUV3CzFPTCW/m0WD+ZjhdcQfNJTNrNlOOH2IEDNR01s4jVRlAOtfy+FyXOX" +
-            "tWHXGoQ7PGg4uYvC/WapyHV/Wpu0iVEI3yyI+cCgo9ww+VPOn8Q/hJdb+eZ0wTki" +
-            "TEYAtTyfY9nMMmzK7luVTCEzm/SeUKL+3AML5I6P+oRUzTlz3fT2lE2TJjbu9Zw2" +
-            "TY/apl6Y3/KGFWo0/7eSRzNrFucvWu545z3AJ9b3JaMWiKHL/f4AZZPmj67k3/7R" +
-            "3Q==" +
-            "-----END CERTIFICATE-----"
+        this.unitRiverManagers = [
+            {id:'1',name:'寇建波'},
+            {id:'2',name:'帅军军'}
+        ];
+        this.townRiverManagers = [
+            {id:'3',name:'白丹'},
+            {id:'4',name:'方舟'}
+        ];
+        this.countryRiverManagers = [
+            {id:'5',name:'熊荣东'},
+            {id:'6',name:'赵重阳'},
+            {id:'7',name:'曾伟'}
+        ];
+        this.gridMembers = [
+            {id:'8',name:'付大海'},
+            {id:'9',name:'李伟'}
+        ]
     }
 
     componentDidMount() {
@@ -999,7 +1062,7 @@ class FusionContainerRight extends Component {
     }
 
     render() {
-        console.log(this.props.showAddDomain);
+        const {data} = this.props;
         var rightContent = "";
         var domainType = this.domainType;
         var scrollHeight = ($(window).height() - 200);
@@ -1024,22 +1087,8 @@ class FusionContainerRight extends Component {
                                     <div className="row">
                                         <div className="item-title col-md-3">河道等级</div>
                                         <div className="item-body col-md-9">
-                                            <div className="clearfix">
-                                                <label
-                                                    className={domainType == "normal" ? "radio-btn selected" : "radio-btn"}
-                                                    onClick={this.domainTypeChanged.bind(this, 'normal')}>
-                                                    <input type="radio" name="domainType"
-                                                          />
-                                                    <span>省内</span>
-                                                </label>
-                                                <label
-                                                    className={domainType == "wildcard" ? "radio-btn selected" : "radio-btn"}
-                                                    onClick={this.domainTypeChanged.bind(this, 'wildcard')}
-                                                    style={{display: this.sourceType == "langchaoBucket" ? "block" : "none"}}>
-                                                    <input type="radio" name="domainType"
-                                                          />
-                                                    <span>省外</span>
-                                                </label>
+                                            <div className="form-group form-inline">
+                                                <input id="riverLevel" className="form-control" type="text" disabled style={{border:0}} value={riverLevel(data.key.split("_").length)}/>
                                             </div>
                                         </div>
                                     </div>
@@ -1051,7 +1100,7 @@ class FusionContainerRight extends Component {
                                         <div className="item-body col-md-9">
                                             <div className="item-describe">请输入河道名称。注意：为了便于标识河道，请准确对河道进行命名。</div>
                                             <div className="form-group form-inline">
-                                                <input className="form-control" type="text" placeholder="河道名称"/>
+                                                <input id="riverName" className="form-control" type="text" placeholder="河道名称"/>
                                             </div>
                                         </div>
                                     </div>
@@ -1145,10 +1194,13 @@ class FusionContainerRight extends Component {
 
                                 <section className="q-item">
                                     <div className="row">
-                                        <div className="item-title col-md-3">执行河长</div>
+                                        <div className="item-title col-md-3">县河长</div>
                                         <div className="item-body col-md-9">
                                             <div className="form-group form-inline">
-                                                <input className="form-control" type="text" placeholder="执行河长"/>
+                                                <select className="form-control" name="type" defaultValue={1}>
+                                                    <option value={1}>{"寇建波"}</option>
+                                                    <option value={2}>{"帅军军"}</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -1156,10 +1208,13 @@ class FusionContainerRight extends Component {
                                 </section>
                                 <section className="q-item">
                                     <div className="row">
-                                        <div className="item-title col-md-3">河道警长</div>
+                                        <div className="item-title col-md-3">镇河长</div>
                                         <div className="item-body col-md-9">
                                             <div className="form-group form-inline">
-                                                <input className="form-control" type="text" placeholder="河道警长"/>
+                                                <select className="form-control" name="type" defaultValue={1}>
+                                                    <option value={1}>{"方舟"}</option>
+                                                    <option value={2}>{"付大海"}</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -1167,10 +1222,28 @@ class FusionContainerRight extends Component {
                                 </section>
                                 <section className="q-item">
                                     <div className="row">
-                                        <div className="item-title col-md-3">二级河长</div>
+                                        <div className="item-title col-md-3">村河长</div>
                                         <div className="item-body col-md-9">
                                             <div className="form-group form-inline">
-                                                <input className="form-control" type="text" placeholder="二级河长"/>
+                                                <select className="form-control" name="type" defaultValue={1}>
+                                                    <option value={1}>{"赵重阳"}</option>
+                                                    <option value={2}>{"熊荣东"}</option>
+                                                    <option value={3}>{"白丹"}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                </section>
+                                <section className="q-item">
+                                    <div className="row">
+                                        <div className="item-title col-md-3">网格员</div>
+                                        <div className="item-body col-md-9">
+                                            <div className="form-group form-inline">
+                                                <select className="form-control" name="type" defaultValue={1}>
+                                                    <option value={1}>{"李伟"}</option>
+                                                    <option value={2}>{"任俊杰"}</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
