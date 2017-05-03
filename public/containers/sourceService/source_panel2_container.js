@@ -557,51 +557,14 @@ class Source_panel_right extends Component {
                                 <div className="col-md-7">
                                     <fieldset className="content-group" style={{padding: "10px"}}>
                                         <legend style={{fontSize: "16px", color: "#5E6166"}}>
-                                            状态
+                                            最新河道指标
                                             <span className="pull-right"
                                                   style={{
                                                       fontSize: "12px",
                                                       color: "gray",
                                                       marginTop: "3px",
                                                       cursor: "pointer"
-                                                  }}> 进入巡检条目</span>
-                                        </legend>
-                                        <div className="table-responsive">
-                                            <table className="table" style={{fontSize: "14px"}}>
-                                                <tbody>
-                                                <tr>
-                                                    <td style={{width: "200px", borderTop: "0 red solid"}}>状态</td>
-                                                    <td style={{borderTop: "0 red solid", color: "red"}}>
-                                                        <button type="button"
-                                                                className="btn border-danger text-danger-500 btn-flat">
-                                                            点击开始治理河道
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <legend style={{fontSize: "16px", color: "#5E6166"}}>
-                                            治理人员
-                                        </legend>
-                                        <div>
-                                            <div className="table-responsive">
-                                                <table className="table" style={{fontSize: "14px"}}>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td style={{width: "50px", borderTop: "0 red solid"}}><i
-                                                            className="icon-circle-small"></i></td>
-                                                        <td style={{borderTop: "0 red solid"}}>付大海</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                        <legend style={{fontSize: "16px", color: "#5E6166"}}>
-                                            当前河道报告
-                                            <span className="pull-right"
-                                                  style={{fontSize: "12px", color: "gray", marginTop: "3px",cursor:"pointer"}}><i
+                                                  }}><i
                                                 className=" icon-more"></i> 更多治理记录</span>
                                         </legend>
                                         <div className="table-responsive">
@@ -647,6 +610,467 @@ class Source_panel_right extends Component {
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <legend style={{fontSize: "16px", color: "#5E6166"}}>
+                                            治理进度跟踪
+                                            <span className="pull-right"
+                                                  style={{
+                                                      fontSize: "12px",
+                                                      color: "gray",
+                                                      marginTop: "3px",
+                                                      cursor: "pointer"
+                                                  }}> 进入巡检条目</span>
+                                        </legend>
+                                        <div className="timeline timeline-right content-group">
+                                            <div className="timeline-container">
+                                                <div className="timeline-row"
+                                                     style={{borderRight: "2px lightgrey solid"}}>
+                                                    <div className="timeline-icon" style={{
+                                                        right: "-25px",
+                                                        textAlign: "center",
+                                                        paddingTop: "6px"
+                                                    }}>
+                                                        环保
+                                                    </div>
+
+                                                    <div className="row">
+                                                        <div className="col-lg-12">
+                                                            <div
+                                                                className="panel border-left-lg border-left-danger timeline-content">
+                                                                <div className="panel-body">
+                                                                    <div className="row">
+                                                                        <div className="col-md-8">
+                                                                            <h6 className="no-margin-top"><a
+                                                                                href="task_manager_detailed.html">#1.
+                                                                                事件上报 至 网格</a></h6>
+                                                                            <p className="mb-15">
+                                                                                已完成河道治理工作，并在各科室大力度的督办下将河道恢复原貌，请网格员进行核实、结案。
+                                                                            </p>
+                                                                            <div className="thumbnail" style={{
+                                                                                width: "50px",
+                                                                                height:"50px",
+                                                                                float: "left",
+                                                                                left: "2px"
+                                                                            }}>
+                                                                                <div className="thumb">
+                                                                                    <img
+                                                                                        src="assets/images/riverData/4.jpg"
+                                                                                        alt=""/>
+                                                                                    <div className="caption-overflow">
+                                                                                    <span>
+                                                                                        <a href="assets/images/riverData/4.jpg"
+                                                                                           data-popup="lightbox"
+                                                                                           rel="gallery"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                                            className="icon-plus3"></i></a>
+                                                                                        <a href="#"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i
+                                                                                            className="icon-link2"></i></a>
+                                                                                    </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="thumbnail" style={{
+                                                                                width: "50px",
+                                                                                height:"50px",
+                                                                                float: "left",
+                                                                                left: "2px"
+                                                                            }}>
+                                                                                <div className="thumb">
+                                                                                    <img
+                                                                                        src="assets/images/riverData/5.jpg"
+                                                                                        alt=""/>
+                                                                                    <div className="caption-overflow">
+                                                                                    <span>
+                                                                                        <a href="assets/images/riverData/5.jpg"
+                                                                                           data-popup="lightbox"
+                                                                                           rel="gallery"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                                            className="icon-plus3"></i></a>
+                                                                                        <a href="#"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i
+                                                                                            className="icon-link2"></i></a>
+                                                                                    </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="thumbnail" style={{
+                                                                                width: "50px",
+                                                                                height:"50px",
+                                                                                float: "left",
+                                                                                left: "2px"
+                                                                            }}>
+                                                                                <div className="thumb">
+                                                                                    <img
+                                                                                        src="assets/images/riverData/6.jpg"
+                                                                                        alt=""/>
+                                                                                    <div className="caption-overflow">
+                                                                                    <span>
+                                                                                        <a href="assets/images/riverData/6.jpg"
+                                                                                           data-popup="lightbox"
+                                                                                           rel="gallery"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                                            className="icon-plus3"></i></a>
+                                                                                        <a href="#"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i
+                                                                                            className="icon-link2"></i></a>
+                                                                                    </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="thumbnail" style={{
+                                                                                width: "50px",
+                                                                                height:"50px",
+                                                                                float: "left",
+                                                                                left: "2px"
+                                                                            }}>
+                                                                                <div className="thumb">
+                                                                                    <img
+                                                                                        src="assets/images/riverData/7.jpg"
+                                                                                        alt=""/>
+                                                                                    <div className="caption-overflow">
+                                                                                    <span>
+                                                                                        <a href="assets/images/riverData/7.jpg"
+                                                                                           data-popup="lightbox"
+                                                                                           rel="gallery"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                                            className="icon-plus3"></i></a>
+                                                                                        <a href="#"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i
+                                                                                            className="icon-link2"></i></a>
+                                                                                    </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div className="col-md-4">
+                                                                            <ul className="list task-details">
+                                                                                <li className="dropdown">
+                                                                                    状态: &nbsp;
+                                                                                    <a href="#"
+                                                                                       className="label label-default"
+                                                                                    >待处理</a>
+                                                                                </li>
+                                                                                <li><a href="#">被催办:1次</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="panel-footer">
+                                                                    <ul>
+                                                                        <li>时间: <span className="text-semibold">2017-5-2 15:46:11</span>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                    <ul className="pull-right">
+                                                                        <li className="dropdown">
+                                                                            <a href="#" className="dropdown-toggle"
+                                                                               data-toggle="dropdown">操作 <span
+                                                                                className="caret"></span></a>
+                                                                            <ul className="dropdown-menu dropdown-menu-right active">
+                                                                                <li><a href="#">上 报</a></li>
+                                                                                <li><a href="#">结 案</a></li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div className="timeline-row"
+                                                     style={{borderRight: "2px lightgrey solid"}}>
+                                                    <div className="timeline-icon" style={{
+                                                        right: "-25px",
+                                                        textAlign: "center",
+                                                        paddingTop: "6px"
+                                                    }}>
+                                                        区县
+                                                    </div>
+
+                                                    <div className="row">
+                                                        <div className="col-lg-12">
+                                                            <div
+                                                                className="panel border-left-lg border-left-primary timeline-content">
+                                                                <div className="panel-body">
+                                                                    <div className="row">
+                                                                        <div className="col-md-8">
+                                                                            <h6 className="no-margin-top"><a
+                                                                                href="task_manager_detailed.html">#2.
+                                                                                事件上报 至 环保部门</a></h6>
+                                                                            <p className="mb-15">
+                                                                                请环保部门进行督办作业，防止出现二次污染的现象。
+                                                                            </p>
+                                                                        </div>
+
+                                                                        <div className="col-md-4">
+                                                                            <ul className="list task-details">
+                                                                                <li className="dropdown">
+                                                                                    状态: &nbsp;
+                                                                                    <a href="#"
+                                                                                       className="label label-primary"
+                                                                                    >已处理</a>
+                                                                                </li>
+                                                                                <li><a href="#">被催办:1次</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="panel-footer">
+                                                                    <ul>
+                                                                        <li>时间: <span className="text-semibold">2017-5-2 15:46:11</span>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div className="timeline-row"
+                                                     style={{borderRight: "2px lightgrey solid"}}>
+                                                    <div className="timeline-icon" style={{
+                                                        right: "-25px",
+                                                        textAlign: "center",
+                                                        paddingTop: "6px"
+                                                    }}>
+                                                        街道
+                                                    </div>
+
+                                                    <div className="row">
+                                                        <div className="col-lg-12">
+                                                            <div
+                                                                className="panel border-left-lg border-left-primary timeline-content">
+                                                                <div className="panel-body">
+                                                                    <div className="row">
+                                                                        <div className="col-md-8">
+                                                                            <h6 className="no-margin-top"><a
+                                                                                href="task_manager_detailed.html">#3.
+                                                                                事件上报 至 区县</a></h6>
+                                                                            <p className="mb-15">
+                                                                                整治河道面积涉及到河道重叠，需要有关部门进行重叠部分河道协调、协同治理工作。<br/>
+                                                                                重叠区域：樊家坡 - 武家寨 交接区域，面接约150平方米。
+                                                                            </p>
+                                                                        </div>
+
+                                                                        <div className="col-md-4">
+                                                                            <ul className="list task-details">
+                                                                                <li className="dropdown">
+                                                                                    状态: &nbsp;
+                                                                                    <a href="#"
+                                                                                       className="label label-primary"
+                                                                                    >已处理</a>
+                                                                                </li>
+                                                                                <li><a href="#">被催办:1次</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="panel-footer">
+                                                                    <ul>
+                                                                        <li>时间: <span className="text-semibold">2017-5-2 15:46:11</span>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div className="timeline-row"
+                                                     style={{borderRight: "2px lightgrey solid"}}>
+                                                    <div className="timeline-icon" style={{
+                                                        right: "-25px",
+                                                        textAlign: "center",
+                                                        paddingTop: "6px"
+                                                    }}>
+                                                        社区
+                                                    </div>
+
+                                                    <div className="row">
+                                                        <div className="col-lg-12">
+                                                            <div
+                                                                className="panel border-left-lg border-left-primary timeline-content">
+                                                                <div className="panel-body">
+                                                                    <div className="row">
+                                                                        <div className="col-md-8">
+                                                                            <h6 className="no-margin-top"><a
+                                                                                href="task_manager_detailed.html">#4.
+                                                                                事件上报 至 街道</a></h6>
+                                                                            <p className="mb-15">
+                                                                                施工面积、施工难度较大，需要借助大型挖掘机和船钓进行深度作业，望街道管理办接管此项事宜。
+                                                                            </p>
+                                                                        </div>
+
+                                                                        <div className="col-md-4">
+                                                                            <ul className="list task-details">
+                                                                                <li className="dropdown">
+                                                                                    状态: &nbsp;
+                                                                                    <a href="#"
+                                                                                       className="label label-primary"
+                                                                                    >已处理</a>
+                                                                                </li>
+                                                                                <li><a href="#">被催办:1次</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="panel-footer">
+                                                                    <ul>
+                                                                        <li>时间: <span className="text-semibold">2017-5-2 15:46:11</span>
+                                                                        </li>
+                                                                    </ul>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div className="timeline-row"
+                                                     style={{borderRight: "2px lightgrey solid"}}>
+                                                    <div className="timeline-icon" style={{
+                                                        right: "-25px",
+                                                        textAlign: "center",
+                                                        paddingTop: "6px"
+                                                    }}>
+                                                        网格
+                                                    </div>
+
+                                                    <div className="row">
+                                                        <div className="col-lg-12">
+                                                            <div
+                                                                className="panel border-left-lg border-left-primary timeline-content">
+                                                                <div className="panel-body">
+                                                                    <div className="row">
+                                                                        <div className="col-md-8">
+                                                                            <h6 className="no-margin-top"><a
+                                                                                href="task_manager_detailed.html">#5.
+                                                                                事件上报 至 社区</a></h6>
+                                                                            <p className="mb-15">
+                                                                                汉江汉王镇河段，樊家坡水质出现大面积污染，情况描述如下:<br/>
+                                                                                1.水流浑浊，肉眼可见大量砂石<br/>
+                                                                                2.高锰酸钾含量 17 MG/L<br/>
+                                                                                3.总磷量 0.8 MG.L<br/>
+                                                                                4.漂浮物大量堆积于和道口<br/>
+                                                                            </p>
+                                                                            <div className="thumbnail" style={{
+                                                                                width: "50px",
+                                                                                height:"50px",
+                                                                                float: "left",
+                                                                                left: "2px"
+                                                                            }}>
+                                                                                <div className="thumb">
+                                                                                    <img
+                                                                                        src="assets/images/riverData/1.jpg"
+                                                                                        alt=""/>
+                                                                                    <div className="caption-overflow">
+                                                                                    <span>
+                                                                                        <a href="assets/images/riverData/1.jpg"
+                                                                                           data-popup="lightbox"
+                                                                                           rel="gallery"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                                            className="icon-plus3"></i></a>
+                                                                                        <a href="#"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i
+                                                                                            className="icon-link2"></i></a>
+                                                                                    </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="thumbnail" style={{
+                                                                                width: "50px",
+                                                                                height:"50px",
+                                                                                float: "left",
+                                                                                left: "2px"
+                                                                            }}>
+                                                                                <div className="thumb">
+                                                                                    <img
+                                                                                        src="assets/images/riverData/2.jpg"
+                                                                                        alt=""/>
+                                                                                    <div className="caption-overflow">
+                                                                                    <span>
+                                                                                        <a href="assets/images/riverData/2.jpg"
+                                                                                           data-popup="lightbox"
+                                                                                           rel="gallery"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                                            className="icon-plus3"></i></a>
+                                                                                        <a href="#"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i
+                                                                                            className="icon-link2"></i></a>
+                                                                                    </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="thumbnail" style={{
+                                                                                width: "50px",
+                                                                                height:"50px",
+                                                                                float: "left",
+                                                                                left: "2px"
+                                                                            }}>
+                                                                                <div className="thumb">
+                                                                                    <img
+                                                                                        src="assets/images/riverData/3.jpg"
+                                                                                        alt=""/>
+                                                                                    <div className="caption-overflow">
+                                                                                    <span>
+                                                                                        <a href="assets/images/riverData/3.jpg"
+                                                                                           data-popup="lightbox"
+                                                                                           rel="gallery"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded"><i
+                                                                                            className="icon-plus3"></i></a>
+                                                                                        <a href="#"
+                                                                                           className="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i
+                                                                                            className="icon-link2"></i></a>
+                                                                                    </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div className="col-md-4">
+                                                                            <ul className="list task-details">
+                                                                                <li className="dropdown">
+                                                                                    状态: &nbsp;
+                                                                                    <a href="#"
+                                                                                       className="label label-primary"
+                                                                                      >已处理</a>
+                                                                                </li>
+                                                                                <li><a href="#">被催办:0次</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="panel-footer">
+                                                                    <ul>
+                                                                        <li>时间: <span className="text-semibold">2017-5-1 21:36:43</span>
+                                                                        </li>
+                                                                    </ul>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
                                     </fieldset>
                                 </div>
                             </div>
